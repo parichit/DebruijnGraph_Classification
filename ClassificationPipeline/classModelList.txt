@@ -1,7 +1,7 @@
 ada,ada 
 adabag,ada,AdaBag,AdaBoost.M1 
-nnet,adaboost,amdai,mda,avNNet,multinom,nnet,pcaNNet 
-bnclassify,adaboost,amdai,mda,avNNet,multinom,nnet,pcaNNet,awnb,awtan,manb,nb,nbDiscrete,nbSearch,tan,tanSearch 
+nnet,ada,AdaBag,AdaBoost.M1,avNNet,multinom,nnet,pcaNNet 
+bnclassify,ada,AdaBag,AdaBoost.M1,avNNet,multinom,nnet,pcaNNet,awnb,awtan,manb,nb,nbDiscrete,nbSearch,tan,tanSearch 
 caret,bag 
 earth,bag,bagEarth,bagEarthGCV,bagFDA,bagFDAGCV,earth,fda,gcvEarth 
 mgcv,bag,bagEarth,bagEarthGCV,bagFDA,bagFDAGCV,earth,fda,gcvEarth,bam,gam 
@@ -11,13 +11,13 @@ binda,binda
 party,binda,blackboost,cforest,ctree,ctree2 
 bst,binda,blackboost,cforest,ctree,ctree2,BstLm,bstSm,bstTree 
 C50,binda,blackboost,cforest,ctree,ctree2,BstLm,bstSm,bstTree,C5.0,C5.0Cost,C5.0Rules,C5.0Tree 
-rrcov,chaid,CSimca,Linda,QdaCov 
-sparsediscrim,chaid,CSimca,Linda,QdaCov,dda,hdrda,rda,rlda 
+rrcov,binda,blackboost,cforest,ctree,ctree2,BstLm,bstSm,bstTree,C5.0,C5.0Cost,C5.0Rules,C5.0Tree,CSimca,Linda,QdaCov 
+sparsediscrim,binda,blackboost,cforest,ctree,ctree2,BstLm,bstSm,bstTree,C5.0,C5.0Cost,C5.0Rules,C5.0Tree,CSimca,Linda,QdaCov,dda,hdrda,rda,rlda 
 deepnet,dnn 
 kerndwd,dnn,dwdLinear,dwdPoly 
 kernlab,dnn,dwdLinear,dwdPoly,dwdRadial,gaussprLinear,gaussprPoly,gaussprRadial,lssvmLinear,lssvmPoly,lssvmRadial,svmBoundrangeString,svmExpoString,svmLinear,svmPoly,svmRadial,svmRadialCost,svmRadialSigma,svmRadialWeights,svmSpectrumString 
 evtree,evtree 
-frbs,extraTrees,FH.GBML,FRBCS.CHI,FRBCS.W,SLAVE 
+frbs,evtree,FH.GBML,FRBCS.CHI,FRBCS.W,SLAVE 
 mboost,gamboost 
 gam,gamboost,gamLoess,gamSpline 
 h2o,gamboost,gamLoess,gamSpline,gbm,gbm_h2o,glmnet,glmnet_h2o 
@@ -40,7 +40,7 @@ msaenet,msaenet
 naivebayes,naive_bayes 
 ordinalNet,ordinalNet 
 e1071,ordinalNet,ordinalRF,parRF,ranger,svmLinear2,svmLinearWeights 
-snn,ordinalNet,ordinalRF,parRF,ranger,svmLinear2,svmLinearWeights,ORFlog,ORFpls,ORFridge,ORFsvm,ownn,snn 
+snn,ordinalNet,ordinalRF,parRF,ranger,svmLinear2,svmLinearWeights,ownn,snn 
 pamr,pam 
 partDSA,partDSA 
 mda,partDSA,pda,pda2 
@@ -67,6 +67,7 @@ sdwd,sdwd
 ipred,sdwd,slda,treebag 
 sparseLDA,sdwd,slda,treebag,smda,sparseLDA 
 spls,spls 
+vbmp,vbmpRadial 
 VGAM,vbmpRadial,vglmAdjCat,vglmContRatio,vglmCumulative 
 wsrf,wsrf 
 xgboost,wsrf,xgbDART,xgbLinear,xgbTree 

@@ -30,12 +30,24 @@ for(mdl in unique_models){
   
 }
 
+print(length(packages))
+
+remove_pkgs = c("fastAdaboost", "adaptDA",  "CHAID", "deepboost", 
+                "elmNN", "extraTrees", "gpls", "logicFS", "FCNN4R", 
+                "mxnet", "nodeHarvest", "obliqueRF", "Classification", "rrlda")
+
+for (k in remove_pkgs){
+  packages[[k]] <- NULL
+}
+
+
+print(length(packages))
 
 # Write the packages to a file
 for (i in 1:length(packages)){
-  
+
   out = c(names(packages[i]))
-          
+
   if (length(packages[[i]]) > 1){
       for (i in packages[[i]]){
         temp = paste(temp, i, sep=",")
@@ -43,7 +55,7 @@ for (i in 1:length(packages)){
   }else{
     temp = packages[[i]]
   }
-  
+
   out = paste(out, temp, sep=",")
 
   cat(out, "\n", file = "classModelList.txt", append=TRUE)

@@ -78,14 +78,14 @@ drawPlots <- function(trainData, testData, typeData, out_dir, out_file) {
 }
 
 
-trainData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/Results/train_results.csv",
-                       stringsAsFactors = FALSE, sep=",")
-
-testData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/Results/test_results.csv",
-                      stringsAsFactors = FALSE, sep=",")
-
-# source("plotResults.R")
-drawPlots(trainData, testData, "imag", out_dir, "Timp.png")
+# trainData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/Results/train_results.csv",
+#                        stringsAsFactors = FALSE, sep=",")
+# 
+# testData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/Results/test_results.csv",
+#                       stringsAsFactors = FALSE, sep=",")
+# 
+# # source("plotResults.R")
+# drawPlots(trainData, testData, "imag", out_dir, "Timp.png")
 
 
 

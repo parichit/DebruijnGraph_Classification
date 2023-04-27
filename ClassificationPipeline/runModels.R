@@ -37,8 +37,8 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
     res_stats = file.path(output_path, stat_file)
   
   
-  # selected_Models = selected_Models[(length(selected_Models)-3):length(selected_Models)]
-  selected_Models = selected_Models[100:169]
+  selected_Models = selected_Models[(length(selected_Models)-2):length(selected_Models)]
+  # selected_Models = selected_Models[100:169]
   
   # result <- train(Zreal~., data=train_data, method="rbfDDA",
   #       trControl = control, preProcess= c("center","scale"))
