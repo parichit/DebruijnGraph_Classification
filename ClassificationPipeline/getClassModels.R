@@ -17,8 +17,6 @@ for(mdl in unique_models){
     temp = temp[1]  
   }
   
-  # print(temp)
-  
   if (!is.null(temp)){
     
     if (is.null(packages[[temp]])){
@@ -32,9 +30,24 @@ for(mdl in unique_models){
   
 }
 
+
 # Write the packages to a file
 for (i in 1:length(packages)){
-  out = paste(names(packages[i]), packages[[i]], sep=",")
-  print(out)
-  cat(out, file="outfile.txt", sep="\n", append=TRUE)
+  
+  out = c(names(packages[i]))
+          
+  if (length(packages[[i]]) > 1){
+      for (i in packages[[i]]){
+        temp = paste(temp, i, sep=",")
+      }
+  }else{
+    temp = packages[[i]]
+  }
+  
+  out = paste(out, temp, sep=",")
+
+  cat(out, "\n", file = "classModelList.txt", append=TRUE)
 }
+
+
+

@@ -6,11 +6,11 @@ library(grid)
 source("plotResults.R")
 
 # Set plot label and size parameters
-plot_title_size = 13
-subplot_title_size = 10
-axis_label_size = 11
-axis_tick_size = 9
-legend_size = 1
+plot_title_size = 16
+subplot_title_size = 14
+axis_label_size = 15
+axis_tick_size = 14
+legend_size = 3
 legend_title_color = "Black"
 
 
@@ -57,8 +57,8 @@ drawPlots <- function(trainData, testData, typeData, out_dir, out_file) {
   
   # source("plotResults.R")
   out <- plot_on_grid(trainDataAcc, testDataAcc, "(A) Accuracy of models on the validation data", 
-                      "Boxplots for top 20 models", "(D) Average acc on test data", 
-                      "Accuracy values for top 20 models", "",
+                      "Boxplots for top 10 models", "(B) Prediction accuracy on test data", 
+                      "Accuracy values for top 10 models", "",
                       "Accuracy", 1, subplot_title_size, axis_label_size, axis_tick_size)
   
   p1 <- out[[1]]
@@ -78,14 +78,14 @@ drawPlots <- function(trainData, testData, typeData, out_dir, out_file) {
 }
 
 
-# trainData <- read.csv2(file = "/Users/schmuck/Documents/Box Sync/PhD/ML_Battery_Data/Results/train_Zimag_results.csv",
-#                        stringsAsFactors = FALSE, sep=",")
-# 
-# testData <- read.csv2(file = "/Users/schmuck/Documents/Box Sync/PhD/ML_Battery_Data/Results/test_Zimag_results.csv",
-#                       stringsAsFactors = FALSE, sep=",")
-# 
-# # source("plotResults.R")
-# drawPlots(trainData, testData, "imag", out_dir, "Zimag.png")
+trainData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/Results/train_results.csv",
+                       stringsAsFactors = FALSE, sep=",")
+
+testData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/Results/test_results.csv",
+                      stringsAsFactors = FALSE, sep=",")
+
+# source("plotResults.R")
+drawPlots(trainData, testData, "imag", out_dir, "Timp.png")
 
 
 

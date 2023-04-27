@@ -41,7 +41,7 @@ plot_on_grid <- function(trainPlotData, testPlotData, title1, subtitle1,
     geom_bar(alpha = 0.6, show.legend = FALSE, stat = "identity", 
                color="black", width=0.7, position = position_dodge(width=0.7), size=0.2) +
     geom_text(label=sprintf("%0.3f", testPlotData[, col]),
-                hjust="inward", vjust="inward", color = "grey30", size=3)
+                hjust="inward", vjust="inward", color = "grey30", size=5)
 
   
   
