@@ -1,9 +1,6 @@
 ada,ada
 adabag,AdaBag
 adabag,AdaBoost.M1
-fastAdaboost,adaboost
-adaptDA,amdai
-adaptDA,mda
 nnet,avNNet
 nnet,multinom
 nnet,nnet
@@ -41,7 +38,6 @@ C50,C5.0
 C50,C5.0Cost
 C50,C5.0Rules
 C50,C5.0Tree
-CHAID,chaid
 rrcov,CSimca
 rrcov,Linda
 rrcov,QdaCov
@@ -49,7 +45,6 @@ sparsediscrim,dda
 sparsediscrim,hdrda
 sparsediscrim,rda
 sparsediscrim,rlda
-deepboost,deepboost
 deepnet,dnn
 kerndwd,dwdLinear
 kerndwd,dwdPoly
@@ -69,9 +64,7 @@ kernlab,svmRadialCost
 kernlab,svmRadialSigma
 kernlab,svmRadialWeights
 kernlab,svmSpectrumString
-elmNN,elm
 evtree,evtree
-extraTrees,extraTrees
 frbs,FH.GBML
 frbs,FRBCS.CHI
 frbs,FRBCS.W
@@ -89,8 +82,6 @@ MASS,lda
 MASS,lda2
 MASS,polr
 MASS,qda
-gpls,gpls
-gpls,pls
 hda,hda
 HDclassif,hdda
 RWeka,J48
@@ -106,7 +97,6 @@ kknn,knn
 klaR,loclda
 klaR,stepLDA
 klaR,stepQDA
-logicFS,logicBag
 caTools,LogitBoost
 LogicReg,logreg
 class,lvq
@@ -122,23 +112,15 @@ keras,mlpKerasDecay
 keras,mlpKerasDecayCost
 keras,mlpKerasDropout
 keras,mlpKerasDropoutCost
-FCNN4R,mlpSGD
 monmlp,monmlp
 msaenet,msaenet
-mxnet,mxnet
-mxnet,mxnetAdam
 naivebayes,naive_bayes
-nodeHarvest,nodeHarvest
 ordinalNet,ordinalNet
 e1071,ordinalRF
 e1071,parRF
 e1071,ranger
 e1071,svmLinear2
 e1071,svmLinearWeights
-obliqueRF,ORFlog
-obliqueRF,ORFpls
-obliqueRF,ORFridge
-obliqueRF,ORFsvm
 snn,ownn
 snn,snn
 pamr,pam
@@ -148,7 +130,6 @@ mda,pda2
 penalizedLDA,PenalizedLDA
 stepPlr,plr
 plsRglm,plsRglm
-Classification,pre
 supervisedPRIM,PRIM
 proxy,protoclass
 randomGLM,randomGLM
@@ -170,7 +151,6 @@ rpart,rpart2
 rpart,rpartCost
 rpartScore,rpartScore
 RRF,RRFglobal
-rrlda,rrlda
 rrcovHD,RSimca
 sda,sda
 sdwd,sdwd
@@ -179,7 +159,6 @@ ipred,treebag
 sparseLDA,smda
 sparseLDA,sparseLDA
 spls,spls
-vbmp,vbmpRadial
 VGAM,vglmAdjCat
 VGAM,vglmContRatio
 VGAM,vglmCumulative

@@ -7,20 +7,13 @@ plot_on_grid <- function(trainPlotData, testPlotData, title1, subtitle1,
   
   
   # Box plot on train data
-  if (metric_type == "Rsquared"){
-    p1 <- ggplot(data=trainPlotData, aes(x=trainPlotData[, col], y=reorder(Model, -trainPlotData[, col]),
-                                         fill = Model)) + 
-      geom_jitter(aes(color=Model), show.legend = FALSE, size=0.6, alpha=0.4)+
-      geom_boxplot(alpha = 0.7, show.legend = FALSE, color="grey60", fatten=1.5, outlier.shape = NA)
-    
-  }else{
-    p1 <- ggplot(data=trainPlotData, aes(x=trainPlotData[, col], y=reorder(Model, trainPlotData[, col]),
+
+  p1 <- ggplot(data=trainPlotData, aes(x=trainPlotData[, col], y=reorder(Model, trainPlotData[, col]),
                                          fill = Model)) +
-      geom_jitter(aes(color=Model), show.legend = FALSE, size=0.6, alpha=0.6)+
-      geom_boxplot(alpha = 0.7, show.legend = FALSE, color="grey60", fatten=1.5, outlier.shape = NA)
+    geom_jitter(aes(color=Model), show.legend = FALSE, size=0.6, alpha=0.6)+
+    geom_boxplot(alpha = 0.7, show.legend = FALSE, color="grey60", fatten=1.5, outlier.shape = NA)
     
-  }
-  
+
   p1 <- p1 + labs(x = x_axis_label, y = y_axis_label,
                   title = title1, subtitle = "") + 
     theme(plot.title = element_text(size=plot_title_size,
@@ -43,23 +36,13 @@ plot_on_grid <- function(trainPlotData, testPlotData, title1, subtitle1,
   # subtitle = "RMSE values are shown for top 30 models"
   
   # Bar plot on test data
-  if (metric_type == "Rsquared"){
-    p2 <- ggplot(data=testPlotData, aes(x=testPlotData[, col], y=reorder(Model, -testPlotData[, col]),
+  p2 <- ggplot(data=testPlotData, aes(x=testPlotData[, col], y=reorder(Model, testPlotData[, col]),
                                         fill = Model)) + 
-      geom_bar(alpha = 0.6, show.legend = FALSE, stat = "identity", 
+    geom_bar(alpha = 0.6, show.legend = FALSE, stat = "identity", 
                color="black", width=0.7, position = position_dodge(width=0.7), size=0.2) +
-      geom_text(label=sprintf("%0.3f", testPlotData[, col]),
+    geom_text(label=sprintf("%0.3f", testPlotData[, col]),
                 hjust="inward", vjust="inward", color = "grey30", size=3)
-    
-  }else{
-    p2 <- ggplot(data=testPlotData, aes(x=testPlotData[, col], y=reorder(Model, testPlotData[, col]),
-                                        fill = Model)) + 
-      geom_bar(alpha = 0.6, show.legend = FALSE, stat = "identity", 
-               color="black", width=0.7, position = position_dodge(width=0.7), size=0.2) +
-      geom_text(label=sprintf("%0.3f", testPlotData[, col]),
-                hjust="inward", vjust="inward", color = "grey30", size=3)
-  }
-  
+
   
   
   p2 <- p2 + labs(x = x_axis_label, y = y_axis_label,

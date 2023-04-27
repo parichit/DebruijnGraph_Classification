@@ -13,27 +13,20 @@ load_data <- function(base_data_path){
 # 
 read_data <- function(base_data_path){
   
-  sheet_names = excel_sheets(base_data_path)
-  Inputdata = data.frame()
+  Inputdata <- read.csv2(base_data_path, sep=",", stringsAsFactors = FALSE)
+
+  target <- Inputdata$target
+  Inputdata <- Inputdata[, -1]
   
-  for (sh in sheet_names){
-    temp <- as.data.frame(read_excel(base_data_path, sheet = sh))
-    items = strsplit(sh, "_")
-    volt = str_sub(items[[1]][1], end=-2)
-    soc = str_sub(items[[1]][2], end=-5)
-    temp = cbind("Volt" = rep(volt, nrow(temp)), temp)
-    temp = cbind("Soc" = rep(soc, nrow(temp)), temp)
-    Inputdata = rbind(Inputdata, temp)
-  }
+  Inputdata <- apply(Inputdata, 2, as.numeric)
+  Inputdata <- as.data.frame(Inputdata)
   
-  Inputdata[, 1] <- as.numeric(Inputdata[, 1])
-  Inputdata[, 2] <- as.numeric(Inputdata[, 2])
-  Inputdata[, 3] <- as.numeric(Inputdata[, 3])
-  Inputdata[, 4] <- as.numeric(Inputdata[, 4])
-  Inputdata[, 5] <- as.numeric(Inputdata[, 5])
+  Inputdata = cbind("target"=as.factor(target), Inputdata)
   
   return(Inputdata)
 }
+
+# Inputdata <- read_data(file.path(base_path, "data", "308_full.csv"))
 
 # for(i in list_files){
 #     temp <- read.table(file=i, header = TRUE, stringsAsFactors = FALSE)
@@ -46,9 +39,9 @@ Inputdata <- read_data(base_data_path)
 
 # Create training and test data
 set.seed(4125)
-train_indices <- createDataPartition(y = as.factor(Inputdata$Soc), p = 0.85, list = FALSE)
-training_data <- Inputdata[train_indices, ]
-test_data <- Inputdata[-train_indices, ]
+train_indices <- createDataPartition(y = as.factor(Inputdata$target), p = 0.80, list = FALSE)
+training_data <- as.data.frame(Inputdata[train_indices, ])
+test_data <- as.data.frame(Inputdata[-train_indices, ])
 
 print("Data read-in successfully")
 print(paste("Rows:", nrow(Inputdata), " Cols:", ncol(Inputdata)))
@@ -58,3 +51,5 @@ out = list("train_data" = training_data, "test_data" = test_data)
 return(out)
 
 }
+
+

@@ -1,6 +1,3 @@
-#@ Dr Hasan Kurban
-#@IUB, Computer Science Department
-
 # Modified by Parichit Sharma, please contact hakurban@gmail.com or parishar@iu.edu for any questions
 #@IUB, Computer Science Department
 
@@ -62,7 +59,7 @@ for (i in namesBaseLibs){
   }
 }
 
-print(paste("Total regression models: ", length(regressionModels), "Number of required libraries:", length(namesBaseLibs), 
+print(paste("Total classification models: ", length(regressionModels), "Number of required libraries:", length(namesBaseLibs), 
             "Number of missing libraries: ", length(missing_libs)))
 
 
@@ -121,3 +118,4 @@ return(unique(successModels))
 
 
 # install_missing_packages
+# install_missing_packages("/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/ClassificationPipeline/classModelList.txt")
