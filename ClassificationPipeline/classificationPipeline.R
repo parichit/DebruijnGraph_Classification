@@ -1,20 +1,26 @@
 path = getwd()
 setwd(file.path(path))
 
+
 base_path = dirname(path)
 
-out_dir = file.path(base_path, "Results")
- 
 
 args = commandArgs(trailingOnly=TRUE)
-if (length(args) < 1){
+
+if (length(args) < 3){
   print("Please mention which prediction you want to make?")
   print("Choices: real, imaginary")
   stop(exiting)
 }
 
-
 already_running = args[1]
+result_dir_name = args[2]
+input_file_name = args[3]
+
+
+out_dir = file.path(base_path, result_dir_name)
+ 
+
 
 # already_running = "no"
 
@@ -52,13 +58,11 @@ print("###################################")
 
 source("DataIO.R")
 
-out <- load_data(file.path(base_path, "data", "308_full.csv"))
+out <- load_data(file.path(base_path, "data", input_file_name))
 train_data <- out[[1]]
 test_data <- out[[2]]
-
-# target <- test_data$target
-# target <- make.names(target)
 test_data$target <- as.factor(test_data$target)
+
 
 
 

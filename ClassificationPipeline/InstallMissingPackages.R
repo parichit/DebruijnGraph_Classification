@@ -74,13 +74,13 @@ install_missing_packages <- function(modelFilePath){
     print("##########################")
     
     
-    install.packages(missing_libs, dependencies = TRUE, Ncpus = 8)
+    # install.packages(missing_libs, dependencies = TRUE, Ncpus = 8)
     
-    # for (i in missing_libs){
-    #   if (!(i %in% alreadyInstalled)){
-    #     install.packages(i, dependencies = c("Imports", "Depends", "Suggests"))
-    #   }
-    # }
+    for (i in missing_libs){
+      if (!(i %in% alreadyInstalled)){
+        install.packages(i, dependencies = c("Imports", "Depends", "Suggests"))
+      }
+    }
     
     # Check how many packages got installed
     # for the current version of R
