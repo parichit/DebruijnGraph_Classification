@@ -11,8 +11,9 @@ require(R.utils)
 require(dplyr)
 
 
+
 runModels <- function(selected_Models, train_data, test_data, time_limit, number, repeats,
-                      output_path, train_out_file, test_out_file, stat_file){
+                      output_path, train_out_file, test_out_file, stat_file, num_mdls){
   
   train_out = ""
   test_out = ""
@@ -21,57 +22,80 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
   allresultsDF = data.frame()
   
   output_path = out_dir
-  selected_Models = availableModels
-  
-  set.seed(47195)
+
+  set.seed(100)
   control <- trainControl(method = "repeatedcv", 
                           number = number, 
                           repeats = repeats, 
                           savePredictions = "final",
-                          index = createResample(train_data[, 1], number*repeats), 
-                          allowParallel = FALSE)
+                          index = createResample(train_data$target, number*repeats), 
+                          allowParallel = FALSE,
+                          classProbs = TRUE)
   
-
+  
     train_out = file.path(output_path, train_out_file)
     test_out = file.path(output_path, test_out_file)
     res_stats = file.path(output_path, stat_file)
-  
-  
-  selected_Models = selected_Models[(length(selected_Models)-2):length(selected_Models)]
-  # selected_Models = selected_Models[100:169]
-  
-  # result <- train(Zreal~., data=train_data, method="rbfDDA",
-  #       trControl = control, preProcess= c("center","scale"))
-  
-  
-  for(i in 1:length(selected_Models)){
     
-    print(paste("Running", selected_Models[i]))
+    # set.seed(9560)
+    # train_data <- ROSE(target~., data = train_data)$data
+    # 
+    # train_data <- as.data.frame(train_data)
+    # 
+    # target <- train_data$target
+    # target <- make.names(target)
+    # train_data$target <- target
     
-        result <- tryCatch(
-        {
-           withTimeout(
-            {
-              train(target~., data=train_data, method=selected_Models[i],
-                    trControl = control, preProcess= c("center","scale"))
-            }, timeout = time_limit)
-        },
-        
-        TimeoutException = function(ex) {
-          result = "timeout"
-          print(paste("Timeout for ", selected_Models[i]))
-        },
-        
-        error = function(err){
-          result =  "error"
-        }
-      )
+    
+    if (num_mdls > 0){
+      selected_Models = availableModels[(length(availableModels)-num_mdls):length(availableModels)]
+    } else if (num_mdls == 0){
+      selected_Models = availableModels
+    }
+    
+  
+    for(i in 1:length(selected_Models)){
+      
+      print(paste("Running", selected_Models[i]))
+      
+          result <- tryCatch(
+          {
+             withTimeout(
+              {
+                caret::train(target~., data=train_data, method=selected_Models[i],
+                      trControl = control, preProcess= c("center","scale"), metric="RUC")
+              }, timeout = time_limit)
+          },
+          
+          TimeoutException = function(ex) {
+            result = "timeout"
+            print(paste("Timeout for ", selected_Models[i]))
+          },
+          
+          error = function(err){
+            print(err)
+            result =  "error"
+          }
+        )
+    #}
 
     if (length(result) > 1){
       
+      # some_mdl = "mlpWeightDecayML"
+      
       resultsDF <- as.data.frame(result$resample)
-      resultsDF["Model"] = rep(selected_Models[i], nrow(resultsDF))
-      resultsDF <- resultsDF[, c(1,4)]
+      resultsDF <- resultsDF[, 1]
+      resultsDF = cbind("Model"=rep(selected_Models[i], length(resultsDF)), "Accuracy"=resultsDF)
+      
+      intermediate_train_stats <- caret::confusionMatrix(result$pred$pred, result$pred$obs, mode="everything")
+      
+      # Get more statistics (particularly the balanced accuracy)
+      resultsDF = cbind(resultsDF, "Sensitivity" = intermediate_train_stats$byClass[[1]], 
+                            "Specificity"=intermediate_train_stats$byClass[[2]], 
+                            "Precision"= intermediate_train_stats$byClass[[5]],  
+                            "Recall"=intermediate_train_stats$byClass[[6]], 
+                            "F1"=intermediate_train_stats$byClass[[7]], 
+                            "Baccuracy"=intermediate_train_stats$byClass[[11]])
       
       allresultsDF <- rbind(allresultsDF, resultsDF)
       
@@ -86,11 +110,24 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
       # Predict the results on test data
       testPredictions <- predict(result, test_data)
       
-      # Calculate the RMSE between predictions and actual test data
+      # Calculate the accuracy between predictions and actual test data
       resultsTestDF = data.frame(t(data.matrix(postResample(unlist(testPredictions),  test_data$target))))
+      
+      
+      resultsTestDF = resultsTestDF[, 1]
+      
+      intermediate_stats <- caret::confusionMatrix(testPredictions, test_data$target, mode="everything")
 
-      resultsTestDF["Model"] = selected_Models[i]
-      resultsTestDF = resultsTestDF[, c(1, 3)]
+      resultsTestDF = cbind("Model"=selected_Models[i], "Accuracy"=resultsTestDF)
+      
+      # Get more statistics (particularly the balanced accuracy)
+      resultsTestDF = cbind(resultsTestDF, "Sensitivity" = intermediate_stats$byClass[[1]], 
+                            "Specificity"=intermediate_stats$byClass[[2]], 
+                            "Precision"= intermediate_stats$byClass[[5]],  
+                            "Recall"=intermediate_stats$byClass[[6]], 
+                            "F1"=intermediate_stats$byClass[[7]], 
+                            "Baccuracy"=intermediate_stats$byClass[[11]])
+      
       
       if (!file.exists(test_out)){
         write.table(resultsTestDF, file=test_out, row.names = FALSE, sep= ",", quote = FALSE)
@@ -112,20 +149,22 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
     
     
     # Save summary statistics of k-fold cross-validation 
-    acc_stat <- as.data.frame(allresultsDF %>% dplyr::select(Accuracy, Model) %>% group_by(Model) %>%
-                                summarize(min = min(Accuracy), max = max(Accuracy), median = median(Accuracy),
-                                          mean = mean(Accuracy), sd = sd(Accuracy)) %>%
+    acc_stat <- as.data.frame(allresultsDF %>% dplyr::select(Baccuracy, Model) %>% group_by(Model) %>%
+                                summarize(min = min(Baccuracy), max = max(Baccuracy), median = median(Baccuracy),
+                                          mean = mean(Baccuracy), sd = sd(Baccuracy)) %>%
+                                arrange(-mean) %>% mutate_if(is.numeric, function(x) {round(x, 3)}))
+    
+    
+    f1_stat <- as.data.frame(allresultsDF %>% dplyr::select(F1, Model) %>% group_by(Model) %>%
+                                summarize(min = min(F1), max = max(F1), median = median(F1),
+                                          mean = mean(F1), sd = sd(F1)) %>%
                                 arrange(-mean) %>% mutate_if(is.numeric, function(x) {round(x, 3)}))
 
-
-    # mae_stat <- mae_stat[order(mae_stat$max, mae_stat$min, mae_stat$sd),]
     acc_stat <- acc_stat[order(acc_stat$max, acc_stat$min, acc_stat$sd),]
-    # rsquared_stat <- rsquared_stat[order(-rsquared_stat$min, rsquared_stat$sd, 
-    #                                      -rsquared_stat$max, -rsquared_stat$mean, 
-    #                                      -rsquared_stat$median),]
+    f1_stat <- f1_stat[order(f1_stat$max, f1_stat$min, f1_stat$sd),]
     
-    # result_statistics <- cbind(rmse_stat, mae_stat, rsquared_stat)
-    write.table(acc_stat, file=res_stats, row.names = FALSE, sep= ",", quote = FALSE)
+    result_statistics <- cbind(acc_stat, f1_stat)
+    write.table(result_statistics, file=res_stats, row.names = FALSE, sep= ",", quote = FALSE)
   }
   
 }

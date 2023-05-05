@@ -1,10 +1,12 @@
 path = getwd()
-setwd(file.path(path, "ClassificationPipeline"))
+setwd(file.path(path))
 
-out_dir = file.path(path, "Results")
-base_path = path 
+base_path = dirname(path)
 
-args = commandArgs(trailingOnly=TRUE)
+out_dir = file.path(base_path, "Results")
+ 
+
+# args = commandArgs(trailingOnly=TRUE)
 
 # if (length(args) < 1){
 #   print("Please mention which prediction you want to make?")
@@ -12,9 +14,11 @@ args = commandArgs(trailingOnly=TRUE)
 #   stop(exiting)
 # }
 # 
-# already_running = args[1]
 
-already_running = "no"
+already_running = args[1]
+
+# already_running = "no"
+
 
 if ( (dir.exists(out_dir)) && (already_running == "no") ){
   time_stamp = format(Sys.time(), "%m_%d_%H-%m-%S")
@@ -53,13 +57,21 @@ out <- load_data(file.path(base_path, "data", "308_full.csv"))
 train_data <- out[[1]]
 test_data <- out[[2]]
 
+# target <- test_data$target
+# target <- make.names(target)
+test_data$target <- as.factor(test_data$target)
+
+
 
 source("runModels.R")
+
 
 # Set parameters
 time_limit = 1000
 number <- 5
-repeats <- 3
+repeats <- 5
+num_mdls <- 0
+show_top <- 20
 
   
   print("###################################")
@@ -75,7 +87,7 @@ repeats <- 3
   testFilePath = file.path(out_dir, test_out_file)
   
   runModels(availableModels, train_data, test_data, time_limit, 
-            number, repeats, out_dir, train_out_file, test_out_file, stat_file)
+            number, repeats, out_dir, train_out_file, test_out_file, stat_file, num_mdls)
   
   trainFilePath = file.path(out_dir, train_out_file)
   testFilePath = file.path(out_dir, test_out_file)
@@ -85,10 +97,10 @@ repeats <- 3
     testData <- read.csv2(file = testFilePath, stringsAsFactors = FALSE, sep=",")
     
     # plot top 30 models
-    drawPlots(trainData, testData, "TIMP", out_dir, plot_file)
+    drawPlots(trainData, testData, "TIMP", out_dir, plot_file, show_top)
     
     # plot all models
-    drawAllPlots(trainData, testData, "TIMP", out_dir, plot_file)
+    drawAllPlots(trainData, testData, "TIMP", out_dir)
     
   } else{
     print("Results could not be located! Please check if the run was completed.")

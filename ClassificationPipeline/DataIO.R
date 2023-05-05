@@ -1,20 +1,16 @@
-require("caret")
 require("readxl")
 require("stringr")
+require("caret")
+require("ROSE")
 
 load_data <- function(base_data_path){
 
+  
 # Read the raw data
-# Format of input data
-# A excel (XLSX) file with multiple sheets
-# A sheet corespond to a specific commbinations of Voltage and SoC values
-# The sheets MUST be names as follows 1.25V_10%SoC 
-# WHERE: 1.25V is the voltage and 10% is the SoC separated by single "_" character.
-# 
 read_data <- function(base_data_path){
   
   Inputdata <- read.csv2(base_data_path, sep=",", stringsAsFactors = FALSE)
-
+  
   target <- Inputdata$target
   Inputdata <- Inputdata[, -1]
   
@@ -22,6 +18,15 @@ read_data <- function(base_data_path){
   Inputdata <- as.data.frame(Inputdata)
   
   Inputdata = cbind("target"=as.factor(target), Inputdata)
+  
+  set.seed(9560)
+  Inputdata <- ROSE(target~., data = Inputdata)$data
+  
+  Inputdata <- as.data.frame(Inputdata)
+  
+  target <- Inputdata$target
+  target <- make.names(target)
+  Inputdata$target <- target
   
   return(Inputdata)
 }
@@ -37,16 +42,21 @@ read_data <- function(base_data_path){
 
 Inputdata <- read_data(base_data_path)
 
+
+# rose_train$target = rose_train %>% mutate(target = factor(target, labels = make.names(levels(target))))
+
+
 # Create training and test data
-set.seed(4125)
-train_indices <- createDataPartition(y = as.factor(Inputdata$target), p = 0.80, list = FALSE)
+set.seed(555)
+train_indices <- createDataPartition(y = as.factor(Inputdata$target), p = 0.85, list = FALSE)
 training_data <- as.data.frame(Inputdata[train_indices, ])
 test_data <- as.data.frame(Inputdata[-train_indices, ])
 
+
 print("Data read-in successfully")
 print(paste("Rows:", nrow(Inputdata), " Cols:", ncol(Inputdata)))
-
 out = list("train_data" = training_data, "test_data" = test_data)
+
 
 return(out)
 

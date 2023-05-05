@@ -8,7 +8,7 @@ plot_on_grid <- function(trainPlotData, testPlotData, title1, subtitle1,
   
   # Box plot on train data
 
-  p1 <- ggplot(data=trainPlotData, aes(x=trainPlotData[, col], y=reorder(Model, trainPlotData[, col]),
+  p1 <- ggplot(data=trainPlotData, aes(x=trainPlotData[, col], y=reorder(Model, -trainPlotData[, col]),
                                          fill = Model)) +
     geom_jitter(aes(color=Model), show.legend = FALSE, size=0.6, alpha=0.6)+
     geom_boxplot(alpha = 0.7, show.legend = FALSE, color="grey60", fatten=1.5, outlier.shape = NA)
@@ -36,10 +36,10 @@ plot_on_grid <- function(trainPlotData, testPlotData, title1, subtitle1,
   # subtitle = "RMSE values are shown for top 30 models"
   
   # Bar plot on test data
-  p2 <- ggplot(data=testPlotData, aes(x=testPlotData[, col], y=reorder(Model, testPlotData[, col]),
+  p2 <- ggplot(data=testPlotData, aes(x=testPlotData[, col], y=reorder(Model, -testPlotData[, col]),
                                         fill = Model)) + 
     geom_bar(alpha = 0.6, show.legend = FALSE, stat = "identity", 
-               color="black", width=0.7, position = position_dodge(width=0.7), size=0.2) +
+               color="black", width=0.7, position = position_dodge(width=0.7), linewidth=0.2) +
     geom_text(label=sprintf("%0.3f", testPlotData[, col]),
                 hjust="inward", vjust="inward", color = "grey30", size=5)
 

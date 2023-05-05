@@ -18,9 +18,7 @@ failedModels = c()
 
 supp_libs = c("doParallel", "tidyverse", "caretEnsemble", "ggplot2", "ggthemes", 
                 "xtable", "tictoc", "foreach", "R.utils", 
-                "readxl", "stringr", "dplyr", "magrittr", "gridExtra")
-
-# not_available_packages <- c("relaxo", "gpls", "nodeHarvest", "mxnet", "FCNN4R", "logicFS", "foba", "extraTrees", "elmNN")
+                "readxl", "stringr", "dplyr", "magrittr", "gridExtra", "yardstick", "ROSE")
 
 # Install additional supporting libs
 for (i in 1:length(supp_libs)){
@@ -32,13 +30,13 @@ for (i in 1:length(supp_libs)){
 
 modelFile <- file(modelFilePath, open="r")
 contents <- readLines(modelFile)
-modelFile
+
 
 for (line in contents){
   cols = unlist(strsplit(line, ","))
     for (i in 2:length(cols)){
       base_libs[[cols[1]]] = append(base_libs[[cols[1]]], cols[i]) 
-      regressionModels = c(regressionModels, cols[i])
+      regressionModels = c(regressionModels, trimws(noquote(cols[i])))
     }
 }
 
@@ -55,7 +53,7 @@ for (i in namesBaseLibs){
   }
   else{
     successPackages = c(successPackages, i)
-    successModels = c(successModels, unlist(base_libs[[i]]))
+    successModels = c(successModels, trimws(noquote(unlist(base_libs[[i]]))))
   }
 }
 
@@ -90,7 +88,7 @@ if (length(missing_libs) > 1){
       }
       else{
         successPackages = c(successPackages, i)
-        successModels = c(successModels, unlist(base_libs[[i]]))
+        successModels = c(successModels, trimws(noquote(unlist(base_libs[[i]]))))
       }
     }
     
@@ -113,9 +111,10 @@ else{
 
 print(paste("Total Models:", length(unique(successModels))))
 return(unique(successModels))
-
 }
 
 
 # install_missing_packages
 install_missing_packages("/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/ClassificationPipeline/classModelList.txt")
+
+close(modelFile)
