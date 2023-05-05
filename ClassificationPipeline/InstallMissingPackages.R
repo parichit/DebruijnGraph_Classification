@@ -32,6 +32,7 @@ install_missing_packages <- function(modelFilePath){
   
   modelFile <- file(modelFilePath, open="r")
   contents <- readLines(modelFile)
+  close(modelFile)
   
   
   for (line in contents){
@@ -73,7 +74,7 @@ install_missing_packages <- function(modelFilePath){
     print("##########################")
     
     
-    install.packages(missing_libs, dependencies = TRUE, Ncpus = 4, dependencies = c("Imports", "Depends", "Suggests"))
+    install.packages(missing_libs, dependencies = TRUE, Ncpus = 8)
     
     # for (i in missing_libs){
     #   if (!(i %in% alreadyInstalled)){
@@ -117,6 +118,4 @@ install_missing_packages <- function(modelFilePath){
 
 
 # install_missing_packages
-install_missing_packages("/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/ClassificationPipeline/classModelList.txt")
-
-close(modelFile)
+# install_missing_packages("/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/ClassificationPipeline/classModelList.txt")

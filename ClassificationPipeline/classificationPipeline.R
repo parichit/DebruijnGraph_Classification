@@ -6,14 +6,13 @@ base_path = dirname(path)
 out_dir = file.path(base_path, "Results")
  
 
-# args = commandArgs(trailingOnly=TRUE)
+args = commandArgs(trailingOnly=TRUE)
+if (length(args) < 1){
+  print("Please mention which prediction you want to make?")
+  print("Choices: real, imaginary")
+  stop(exiting)
+}
 
-# if (length(args) < 1){
-#   print("Please mention which prediction you want to make?")
-#   print("Choices: real, imaginary")
-#   stop(exiting)
-# }
-# 
 
 already_running = args[1]
 
