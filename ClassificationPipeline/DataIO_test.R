@@ -1,0 +1,62 @@
+require("readxl")
+require("stringr")
+require("caret")
+require("ROSE")
+
+load_data <- function(base_data_path){
+
+  
+# Read the raw data
+read_data <- function(base_data_path){
+  
+  Inputdata <- read.csv2(base_data_path, sep=",", stringsAsFactors = FALSE)
+  
+  target <- Inputdata$target
+  Inputdata <- Inputdata[, -1]
+  
+  Inputdata <- apply(Inputdata, 2, as.numeric)
+  Inputdata <- as.data.frame(Inputdata)
+  
+  Inputdata = cbind("target"=as.factor(target), Inputdata)
+  
+  # set.seed(9560)
+  # Inputdata <- ROSE(target~., data = Inputdata)$data
+
+  
+  Inputdata <- as.data.frame(Inputdata)
+  target <- Inputdata$target
+  target <- make.names(target)
+  Inputdata$target <- target
+  
+  return(Inputdata)
+}
+
+# Inputdata <- read_data(file.path(base_path, "data", "308_full.csv"))
+
+# for(i in list_files){
+#     temp <- read.table(file=i, header = TRUE, stringsAsFactors = FALSE)
+#     soc_values <- rep(tools::file_path_sans_ext(basename(i), nrow(temp)))
+#     temp = cbind("soc"=as.numeric(soc_values), temp)
+#     Inputdata <- rbind(Inputdata, temp)
+# }
+
+Inputdata <- read_data(base_data_path)
+
+
+# Create training and test data
+set.seed(555)
+train_indices <- createDataPartition(y = as.factor(Inputdata$target), p = 0.80, list = FALSE)
+training_data <- as.data.frame(Inputdata[train_indices, ])
+test_data <- as.data.frame(Inputdata[-train_indices, ])
+
+
+print("Data read-in successfully")
+print(paste("Rows:", nrow(Inputdata), " Cols:", ncol(Inputdata)))
+out = list("train_data" = training_data, "test_data" = test_data)
+
+
+return(out)
+
+}
+
+

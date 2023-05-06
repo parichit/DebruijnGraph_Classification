@@ -29,7 +29,6 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
                           repeats = repeats, 
                           savePredictions = "final",
                           index = createResample(train_data$target, number*repeats), 
-                          allowParallel = FALSE,
                           classProbs = TRUE)
   
   

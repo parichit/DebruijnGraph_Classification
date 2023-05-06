@@ -33,8 +33,8 @@ caTools,LogitBoost
 LogicReg,logreg 
 class,lvq 
 HiDimDA,lvq,Mlda,RFlda 
-RSNNS,lvq,Mlda,RFlda,mlp,mlpML,mlpWeightDecay,mlpWeightDecayML,rbf,rbfDDA 
-keras,lvq,Mlda,RFlda,mlp,mlpML,mlpWeightDecay,mlpWeightDecayML,rbf,rbfDDA,mlpKerasDecay,mlpKerasDecayCost,mlpKerasDropout,mlpKerasDropoutCost 
+RSNNS,lvq,Mlda,RFlda,mlp,mlpML,mlpWeightDecay,mlpWeightDecayML, 
+keras,lvq,Mlda,RFlda,mlp,mlpML,mlpWeightDecay,mlpWeightDecayML,mlpKerasDecay,mlpKerasDecayCost,mlpKerasDropout,mlpKerasDropoutCost 
 monmlp,monmlp 
 msaenet,msaenet 
 naivebayes,naive_bayes 
