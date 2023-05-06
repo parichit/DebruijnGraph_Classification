@@ -2,8 +2,8 @@ path = getwd()
 setwd(file.path(path))
 base_path = dirname(path)
 
-
 args = commandArgs(trailingOnly=TRUE)
+
 
 if (length(args) < 3){
   print("Please mention which prediction you want to make?")
@@ -17,13 +17,12 @@ input_file_name = args[3]
 
 
 # already_running = "no"
-# result_dir_name = "test"
-# input_file_name = "308_random5_avg.csv"
+# result_dir_name = "test123"
+# input_file_name = "random5_avg.csv"
 
 
 out_dir = file.path(base_path, result_dir_name)
  
-
 
 if ( (dir.exists(out_dir)) && (already_running == "no") ){
   time_stamp = format(Sys.time(), "%m_%d_%H-%m-%S")
@@ -61,7 +60,7 @@ source("DataIO_test.R")
 out <- load_data(file.path(base_path, "data", input_file_name))
 train_data <- out[[1]]
 test_data <- out[[2]]
-test_data$target <- as.factor(test_data$target)
+
 
 
 source("runModels.R")

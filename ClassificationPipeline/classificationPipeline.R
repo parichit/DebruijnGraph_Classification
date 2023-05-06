@@ -1,7 +1,5 @@
 path = getwd()
 setwd(file.path(path))
-
-
 base_path = dirname(path)
 
 
@@ -17,10 +15,14 @@ already_running = args[1]
 result_dir_name = args[2]
 input_file_name = args[3]
 
-out_dir = file.path(base_path, result_dir_name)
- 
 
 # already_running = "no"
+# result_dir_name = "test_results"
+# input_file_name = "308_full.csv"
+
+
+
+out_dir = file.path(base_path, result_dir_name)
 
 
 if ( (dir.exists(out_dir)) && (already_running == "no") ){
@@ -63,6 +65,7 @@ test_data$target <- as.factor(test_data$target)
 
 
 
+
 source("runModels.R")
 
 
@@ -78,8 +81,8 @@ show_top <- 20
   print("3 RUN MODELS FOR PREDICTING REAL COMPONENT OF IMPEDANCE")
   print("###################################")
   
-  train_out_file = paste(result_dir_name, "_train_results.csv", sep="")
-  test_out_file = paste(result_dir_name, "_test_results.csv", sep="")
+  train_out_file = "train_results.csv"
+  test_out_file = "test_results.csv"
   stat_file = "Timp_stat.csv"
   plot_file = "Timp.png"
   

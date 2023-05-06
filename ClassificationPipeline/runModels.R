@@ -29,6 +29,7 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
                           repeats = repeats, 
                           savePredictions = "final",
                           index = createResample(train_data$target, number*repeats), 
+                          allowParallel = FALSE,
                           classProbs = TRUE)
   
   
@@ -110,8 +111,7 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
       testPredictions <- predict(result, test_data)
       
       # Calculate the accuracy between predictions and actual test data
-      resultsTestDF = data.frame(t(data.matrix(postResample(unlist(testPredictions),  test_data$target))))
-      
+      resultsTestDF = data.frame(t(data.matrix(postResample(unlist(testPredictions), test_data$target))))
       
       resultsTestDF = resultsTestDF[, 1]
       

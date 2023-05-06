@@ -43,14 +43,18 @@ read_data <- function(base_data_path){
 Inputdata <- read_data(base_data_path)
 
 
-# rose_train$target = rose_train %>% mutate(target = factor(target, labels = make.names(levels(target))))
-
-
 # Create training and test data
 set.seed(555)
 train_indices <- createDataPartition(y = as.factor(Inputdata$target), p = 0.85, list = FALSE)
 training_data <- as.data.frame(Inputdata[train_indices, ])
 test_data <- as.data.frame(Inputdata[-train_indices, ])
+
+
+#################
+# Save the train and test data
+#################
+# write.table(training_data, file=file.path(dirname(base_data_path), "debrujin_train_data.csv"), sep=",", row.names = FALSE)
+# write.table(test_data, file=file.path(dirname(base_data_path), "debrujin_test_data.csv"), sep=",", row.names = FALSE)
 
 
 print("Data read-in successfully")

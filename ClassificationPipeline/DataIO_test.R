@@ -19,14 +19,13 @@ read_data <- function(base_data_path){
   
   Inputdata = cbind("target"=as.factor(target), Inputdata)
   
-  # set.seed(9560)
-  # Inputdata <- ROSE(target~., data = Inputdata)$data
+  set.seed(9560)
+  Inputdata <- ROSE(target~., data = Inputdata)$data
 
-  
   Inputdata <- as.data.frame(Inputdata)
   target <- Inputdata$target
   target <- make.names(target)
-  Inputdata$target <- target
+  Inputdata$target <- as.factor(target)
   
   return(Inputdata)
 }
@@ -40,23 +39,30 @@ read_data <- function(base_data_path){
 #     Inputdata <- rbind(Inputdata, temp)
 # }
 
-Inputdata <- read_data(base_data_path)
+train_data <- read_data(base_data_path)
 
 
 # Create training and test data
-set.seed(555)
-train_indices <- createDataPartition(y = as.factor(Inputdata$target), p = 0.80, list = FALSE)
-training_data <- as.data.frame(Inputdata[train_indices, ])
-test_data <- as.data.frame(Inputdata[-train_indices, ])
+# set.seed(555)
+test_data <- read.csv2(file=file.path(dirname(base_data_path), "debrujin_test_data.csv"), sep=",", stringsAsFactors = FALSE)
+
+target <- test_data$target
+test_data <- test_data[, -1]
+
+test_data <- apply(test_data, 2, as.numeric)
+test_data <- as.data.frame(test_data)
+test_data <- cbind("target"=as.factor(target), test_data)
+test_data$target <- as.factor(make.names(target))
+
+colnames(test_data) <- colnames(train_data)
 
 
 print("Data read-in successfully")
-print(paste("Rows:", nrow(Inputdata), " Cols:", ncol(Inputdata)))
-out = list("train_data" = training_data, "test_data" = test_data)
+print(paste("Rows:", nrow(train_data), " Cols:", ncol(train_data)))
+out = list("train_data" = train_data, "test_data" = test_data)
 
 
 return(out)
-
 }
 
 
