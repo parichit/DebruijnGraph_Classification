@@ -21,7 +21,6 @@ input_file_name = args[3]
 # input_file_name = "308_full.csv"
 
 
-
 out_dir = file.path(base_path, result_dir_name)
 
 
