@@ -14,11 +14,13 @@ if (length(args) < 3){
 already_running = args[1]
 result_dir_name = args[2]
 input_file_name = args[3]
+upsample = args[4]
 
 
 # already_running = "no"
 # result_dir_name = "test_results"
-# input_file_name = "308_full.csv"
+# input_file_name = "uniprot_norm.csv"
+# upsample = "FALSE"
 
 
 out_dir = file.path(base_path, result_dir_name)
@@ -57,7 +59,7 @@ print("###################################")
 
 source("DataIO.R")
 
-out <- load_data(file.path(base_path, "data", input_file_name))
+out <- load_data(file.path(base_path, "data", input_file_name), upsample)
 train_data <- out[[1]]
 test_data <- out[[2]]
 test_data$target <- as.factor(test_data$target)

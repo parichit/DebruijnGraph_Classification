@@ -3,11 +3,11 @@ require("stringr")
 require("caret")
 require("ROSE")
 
-load_data <- function(base_data_path){
+load_data <- function(base_data_path, upsample){
 
   
 # Read the raw data
-read_data <- function(base_data_path){
+read_data <- function(base_data_pathm, upsample){
   
   Inputdata <- read.csv2(base_data_path, sep=",", stringsAsFactors = FALSE)
   
@@ -19,8 +19,12 @@ read_data <- function(base_data_path){
   
   Inputdata = cbind("target"=as.factor(target), Inputdata)
   
-  set.seed(9560)
-  Inputdata <- ROSE(target~., data = Inputdata)$data
+  if(upsample == "TRUE"){
+      set.seed(9560)
+      Inputdata <- ROSE(target~., data = Inputdata)$data
+  } else{
+    print("NO UPSAMPLING")
+  }
   
   Inputdata <- as.data.frame(Inputdata)
   
@@ -31,6 +35,8 @@ read_data <- function(base_data_path){
   return(Inputdata)
 }
 
+
+
 # Inputdata <- read_data(file.path(base_path, "data", "308_full.csv"))
 
 # for(i in list_files){
@@ -40,7 +46,7 @@ read_data <- function(base_data_path){
 #     Inputdata <- rbind(Inputdata, temp)
 # }
 
-Inputdata <- read_data(base_data_path)
+Inputdata <- read_data(base_data_path, upsample)
 
 
 # Create training and test data
