@@ -41,5 +41,5 @@ sdwd,sdwd
 sparseLDA,sdwd,slda,treebag,smda,sparseLDA 
 spls,spls 
 VGAM,vbmpRadial,vglmAdjCat,vglmContRatio,vglmCumulative 
-xgboost,wsrf,xgbLinear,xgbTree 
+xgboost,wsrf,xgbLinear 
 kohonen,xyf 
