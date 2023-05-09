@@ -4,8 +4,7 @@ base_path = dirname(path)
 
 args = commandArgs(trailingOnly=TRUE)
 
-
-if (length(args) < 3){
+if (length(args) < 4){
   print("Please mention which prediction you want to make?")
   print("Choices: real, imaginary")
   stop(exiting)
@@ -14,6 +13,7 @@ if (length(args) < 3){
 already_running = args[1]
 result_dir_name = args[2]
 input_file_name = args[3]
+out_file_name = args[4]
 
 
 # already_running = "no"
@@ -73,15 +73,14 @@ repeats <- 5
 num_mdls <- 0
 show_top <- 20
 
-  
   print("###################################")
   print("3 RUN MODELS FOR PREDICTING REAL COMPONENT OF IMPEDANCE")
   print("###################################")
   
   train_out_file = "train_results.csv"
   test_out_file = "test_results.csv"
-  stat_file = "Timp_stat.csv"
-  plot_file = "Timp.png"
+  stat_file = paste(out_file_name, "_stat.csv", sep="")
+  plot_file = paste(out_file_name, ".png", sep= "")
   
   trainFilePath = file.path(out_dir, train_out_file)
   testFilePath = file.path(out_dir, test_out_file)
@@ -91,6 +90,7 @@ show_top <- 20
   
   trainFilePath = file.path(out_dir, train_out_file)
   testFilePath = file.path(out_dir, test_out_file)
+
   
   if (file.exists(trainFilePath) && (file.exists(testFilePath))){
     trainData <- read.csv2(file = trainFilePath, stringsAsFactors = FALSE, sep=",")
