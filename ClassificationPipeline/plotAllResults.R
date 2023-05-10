@@ -18,9 +18,10 @@ plot_individual_results <- function(trainPlotData, testPlotData, title1,
   # Bar plot on test data
     p2 <- ggplot(data=testPlotData, aes(y=testPlotData[, col], x=reorder(Model, -testPlotData[, col]), fill = Model)) + 
       geom_bar(alpha = 0.6, show.legend = FALSE, stat = "identity", 
-               color="black", width=0.6, position = position_dodge(width=0.7), size=0.2) +
-      geom_text(label=sprintf("%0.3f", testPlotData[, col]),
-                hjust="inward", vjust="inward", color = "grey30", size=1.5, angle=90, fontface = "bold")
+               color="black", width=0.6, position = position_dodge(width=0.7), size=0.2) 
+      
+    # geom_text(label=sprintf("%0.3f", testPlotData[, col]),
+    #             hjust="inward", vjust="inward", color = "grey30", size=1.5, angle=90, fontface = "bold")
     
   
     p2 <- p2 + labs(title = title2, x="", y ="") + 

@@ -7,13 +7,12 @@ library(gridExtra)
 source("plotAllResults.R")
 
 # Set plot label and size parameters
-plot_title_size = 12
-subplot_title_size = 9
-axis_label_size = 9
-axis_tick_size = 6.5
-legend_size = 1
+plot_title_size = 13
+subplot_title_size = 11
+axis_label_size = 7
+axis_tick_size = 7
+legend_size = 3
 legend_title_color = "Black"
-typeData = "real"
 
 
 drawAllPlots <- function(trainData, testData, typeData, out_dir) {
@@ -29,8 +28,8 @@ drawAllPlots <- function(trainData, testData, typeData, out_dir) {
     DataBacc <- rawData[, c(1, 8)]
     DataF1 <- rawData[, c(1, 7)]
     
-    DataBacc <- DataBacc %>% arrange(Baccuracy)
-    DataF1 <- DataF1 %>% arrange(F1)
+    DataBacc <- DataBacc[order(DataBacc$Baccuracy, decreasing=TRUE), ] 
+    DataF1 <- DataF1[order(DataF1$F1, decreasing=TRUE), ]
     
     return(list(DataBacc, DataF1))
   }
@@ -46,7 +45,7 @@ drawAllPlots <- function(trainData, testData, typeData, out_dir) {
   testDataF1 <- out[[2]]
 
   
-  out <- plot_individual_results(trainDataBacc, testDataBacc, "Spread of balanced accuracy for all models on training data", 
+  out <- plot_individual_results(trainDataBacc, testDataBacc, "Spread of balanced accuracy for all models on validation data", 
                    "Balanced accuracy on test data", "Balanced accuracy", 2, subplot_title_size, axis_tick_size)
   
   p1 <- out[[1]]
@@ -67,11 +66,11 @@ drawAllPlots <- function(trainData, testData, typeData, out_dir) {
   
   
   ggsave(file.path(out_dir, paste(typeData, "AllBacc.png", sep="_")), combined_plot, dpi=360, height=10,
-         width=9, units="in")
+         width=12, units="in")
   
   
   
-  out <- plot_individual_results(trainDataF1, testDataF1, "Spread of F1 scires for all models on training data", 
+  out <- plot_individual_results(trainDataF1, testDataF1, "Spread of F1 scores for all models on validation data", 
                                  "F1 score on test data", "F1 score", 2, subplot_title_size, axis_tick_size)
   
   p1 <- out[[1]]
@@ -90,18 +89,20 @@ drawAllPlots <- function(trainData, testData, typeData, out_dir) {
   
   
   ggsave(file.path(out_dir, paste(typeData, "AllF1.png", sep="_")), combined_plot, dpi=360, height=10,
-                width=9, units="in")
+                width=12, units="in")
   
 
 }
 
-# trainData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/Results/train_results.csv",
-#                        stringsAsFactors = FALSE, sep=",")
-# 
-# testData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/Results/test_results.csv",
-#                       stringsAsFactors = FALSE, sep=",")
-# 
-# drawAllPlots(trainData, testData, "Timp", out_dir)
+trainData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/random100_avg/train_results.csv",
+                        stringsAsFactors = FALSE, sep=",")
+
+testData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/random100_avg/test_results.csv",
+                       stringsAsFactors = FALSE, sep=",")
+
+out_dir = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/random100_avg/"
+
+drawAllPlots(trainData, testData, "rand_100", out_dir)
 
 
 
