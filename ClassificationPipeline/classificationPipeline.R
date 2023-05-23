@@ -3,24 +3,24 @@ setwd(file.path(path))
 base_path = dirname(path)
 
 
-args = commandArgs(trailingOnly=TRUE)
+# args = commandArgs(trailingOnly=TRUE)
+# 
+# if (length(args) < 3){
+#   print("Please mention which prediction you want to make?")
+#   print("Choices: real, imaginary")
+#   stop(exiting)
+# }
+# 
+# already_running = args[1]
+# result_dir_name = args[2]
+# input_file_name = args[3]
+# upsample = args[4]
 
-if (length(args) < 3){
-  print("Please mention which prediction you want to make?")
-  print("Choices: real, imaginary")
-  stop(exiting)
-}
 
-already_running = args[1]
-result_dir_name = args[2]
-input_file_name = args[3]
-upsample = args[4]
-
-
-# already_running = "no"
-# result_dir_name = "test_results"
-# input_file_name = "uniprot_norm.csv"
-# upsample = "FALSE"
+already_running = "no"
+result_dir_name = "test_results"
+input_file_name = "308_full.csv"
+upsample = "FALSE"
 
 
 out_dir = file.path(base_path, result_dir_name)
