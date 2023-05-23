@@ -73,7 +73,7 @@ time_limit = 1000
 number <- 5
 repeats <- 5
 num_mdls <- 0
-show_top <- 20
+show_top <- 10
 
   
   print("###################################")
