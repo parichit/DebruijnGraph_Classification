@@ -51,7 +51,7 @@ Inputdata <- read_data(base_data_path, upsample)
 
 # Create training and test data
 set.seed(555)
-train_indices <- createDataPartition(y = as.factor(Inputdata$target), p = 0.85, list = FALSE)
+train_indices <- createDataPartition(y = as.factor(Inputdata$target), p = 0.75, list = FALSE)
 training_data <- as.data.frame(Inputdata[train_indices, ])
 test_data <- as.data.frame(Inputdata[-train_indices, ])
 

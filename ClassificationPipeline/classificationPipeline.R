@@ -29,6 +29,7 @@ if (length(args) < 3){
 already_running = "no"
 result_dir_name = "test_results"
 input_file_name = "308_full.csv"
+# input_file_name = "random100_avg.csv"
 upsample = "TRUE"
 
 
@@ -86,8 +87,8 @@ source("runModels.R")
 
 
 time_limit = 1000
-number <- 3
-repeats <- 1
+number <- 5
+repeats <- 3
 num_mdls <- 2
 show_top <- 10
 

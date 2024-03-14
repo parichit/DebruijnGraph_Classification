@@ -95,7 +95,7 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
       intermediate_train_stats <- caret::confusionMatrix(result$pred$pred, result$pred$obs, mode="everything")
       
       # Extract AUC-ROC
-      temp_res <- evalm(result)
+      temp_res <- evalm(result, silent = TRUE)
       
       # Get more statistics (particularly the balanced accuracy)
       resultsDF = cbind(resultsDF, "Sensitivity" = intermediate_train_stats$byClass[[1]], 
@@ -118,6 +118,7 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
       
       # Predict the results on test data
       testPredictions <- predict(result, test_data)
+      testProba <- predict(result, test_data, type="prob")
       
       # Calculate the accuracy between predictions and actual test data
       resultsTestDF = data.frame(t(data.matrix(postResample(unlist(testPredictions), test_data$target))))
@@ -125,6 +126,10 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
       resultsTestDF = resultsTestDF[, 1]
       
       intermediate_stats <- caret::confusionMatrix(testPredictions, test_data$target, mode="everything")
+      
+      # Extract AUC-ROC
+      test_d = data.frame(testProba, test_data$target)
+      temp_res <- evalm(test_d, silent = TRUE)
 
       resultsTestDF = cbind("Model"=selected_Models[i], "Accuracy"=resultsTestDF)
       
@@ -134,7 +139,8 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
                             "Precision"= intermediate_stats$byClass[[5]],  
                             "Recall"=intermediate_stats$byClass[[6]], 
                             "F1"=intermediate_stats$byClass[[7]], 
-                            "Baccuracy"=intermediate_stats$byClass[[11]])
+                            "Baccuracy"=intermediate_stats$byClass[[11]],
+                            "AUC-ROC"=temp_res$stdres$Group1$Score[13])
       
       
       if (!file.exists(test_out)){
