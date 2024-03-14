@@ -22,6 +22,8 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
   allresultsDF = data.frame()
   
   output_path = out_dir
+  
+  output_path = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/"
 
   set.seed(100)
   control <- trainControl(method = "repeatedcv", 
@@ -52,6 +54,8 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
       selected_Models = availableModels
     }
     
+    selected_Models = c("wsrf")
+    
   
     for(i in 1:length(selected_Models)){
       
@@ -76,7 +80,7 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
             result =  "error"
           }
         )
-    #}
+    # }
 
     if (length(result) > 1){
       
@@ -86,7 +90,11 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
       resultsDF <- resultsDF[, 1]
       resultsDF = cbind("Model"=rep(selected_Models[i], length(resultsDF)), "Accuracy"=resultsDF)
       
+      #Extract other statistics
       intermediate_train_stats <- caret::confusionMatrix(result$pred$pred, result$pred$obs, mode="everything")
+      
+      # Extract AUC-ROC
+      temp_res <- evalm(result)
       
       # Get more statistics (particularly the balanced accuracy)
       resultsDF = cbind(resultsDF, "Sensitivity" = intermediate_train_stats$byClass[[1]], 
@@ -94,7 +102,8 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
                             "Precision"= intermediate_train_stats$byClass[[5]],  
                             "Recall"=intermediate_train_stats$byClass[[6]], 
                             "F1"=intermediate_train_stats$byClass[[7]], 
-                            "Baccuracy"=intermediate_train_stats$byClass[[11]])
+                            "Baccuracy"=intermediate_train_stats$byClass[[11]],
+                            "AUC-ROC"=temp_res$optres$"Group 1"$Score[13])
       
       allresultsDF <- rbind(allresultsDF, resultsDF)
       
@@ -167,3 +176,14 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
   
 }
 
+
+true_class <- factor(sample(paste0("Class", 1:2), 
+                            size = 1000,
+                            prob = c(.2, .8), replace = TRUE))
+true_class <- sort(true_class)
+class1_probs <- rbeta(sum(true_class == "Class1"), 4, 1)
+class2_probs <- rbeta(sum(true_class == "Class2"), 1, 2.5)
+test_set <- data.frame(obs = true_class,
+                       Class1 = c(class1_probs, class2_probs))
+test_set$Class2 <- 1 - test_set$Class1
+test_set$pred <- factor(ifelse(test_set$Class1 >= .5, "Class1", "Class2"))

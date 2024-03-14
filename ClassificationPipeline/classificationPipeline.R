@@ -3,14 +3,23 @@ setwd(file.path(path))
 base_path = dirname(path)
 
 
-# args = commandArgs(trailingOnly=TRUE)
-# 
-# if (length(args) < 3){
-#   print("Please mention which prediction you want to make?")
-#   print("Choices: real, imaginary")
-#   stop(exiting)
-# }
-# 
+args = commandArgs(trailingOnly=TRUE)
+
+
+if (length(args) < 3){
+  print("Expects at-least 3 arguments, as follows:")
+  print("if the program is already running: yes/no")
+  print("Name of the outut directory: my_out_dir")
+  print("Name of the input file (in this case, it's fixes): 308_full.csv")
+  print("Whether upsampling is required: TRUE/FALSE")
+  print()
+  print("Here is a sample run (you can copy and paste it in the terminal directly to run the program)")
+  print("Rscript classificationPipeline.R no test_output 308_full.csv TRUE")
+  stop(exiting)
+}
+
+
+
 # already_running = args[1]
 # result_dir_name = args[2]
 # input_file_name = args[3]
@@ -69,10 +78,17 @@ source("runModels.R")
 
 
 # Set parameters
+# time_limit = 1000
+# number <- 5
+# repeats <- 5
+# num_mdls <- 0
+# show_top <- 10
+
+
 time_limit = 1000
 number <- 5
-repeats <- 5
-num_mdls <- 0
+repeats <- 1
+num_mdls <- 2
 show_top <- 10
 
   
@@ -97,13 +113,13 @@ show_top <- 10
   if (file.exists(trainFilePath) && (file.exists(testFilePath))){
     trainData <- read.csv2(file = trainFilePath, stringsAsFactors = FALSE, sep=",")
     testData <- read.csv2(file = testFilePath, stringsAsFactors = FALSE, sep=",")
-    
+
     # plot top 30 models
     drawPlots(trainData, testData, "TIMP", out_dir, plot_file, show_top)
-    
+
     # plot all models
     drawAllPlots(trainData, testData, "TIMP", out_dir)
-    
+
   } else{
     print("Results could not be located! Please check if the run was completed.")
   }

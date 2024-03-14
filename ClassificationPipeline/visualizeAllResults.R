@@ -94,15 +94,15 @@ drawAllPlots <- function(trainData, testData, typeData, out_dir) {
 
 }
 
-trainData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/random100_avg/train_results.csv",
-                        stringsAsFactors = FALSE, sep=",")
-
-testData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/random100_avg/test_results.csv",
-                       stringsAsFactors = FALSE, sep=",")
-
-out_dir = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/random100_avg/"
-
-drawAllPlots(trainData, testData, "rand_100", out_dir)
+# trainData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/debrujin_blast/train_results.csv",
+#                         stringsAsFactors = FALSE, sep=",")
+# 
+# testData <- read.csv2(file = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/debrujin_blast/test_results.csv",
+#                        stringsAsFactors = FALSE, sep=",")
+# 
+# out_dir = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/random100_avg/"
+# 
+# drawAllPlots(trainData, testData, "debrujin_blast", out_dir)
 
 
 
