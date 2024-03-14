@@ -29,7 +29,7 @@ if (length(args) < 3){
 already_running = "no"
 result_dir_name = "test_results"
 input_file_name = "308_full.csv"
-upsample = "FALSE"
+upsample = "TRUE"
 
 
 out_dir = file.path(base_path, result_dir_name)
@@ -86,7 +86,7 @@ source("runModels.R")
 
 
 time_limit = 1000
-number <- 5
+number <- 3
 repeats <- 1
 num_mdls <- 2
 show_top <- 10
@@ -110,19 +110,19 @@ show_top <- 10
   trainFilePath = file.path(out_dir, train_out_file)
   testFilePath = file.path(out_dir, test_out_file)
   
-  if (file.exists(trainFilePath) && (file.exists(testFilePath))){
-    trainData <- read.csv2(file = trainFilePath, stringsAsFactors = FALSE, sep=",")
-    testData <- read.csv2(file = testFilePath, stringsAsFactors = FALSE, sep=",")
-
-    # plot top 30 models
-    drawPlots(trainData, testData, "TIMP", out_dir, plot_file, show_top)
-
-    # plot all models
-    drawAllPlots(trainData, testData, "TIMP", out_dir)
-
-  } else{
-    print("Results could not be located! Please check if the run was completed.")
-  }
+  # if (file.exists(trainFilePath) && (file.exists(testFilePath))){
+  #   trainData <- read.csv2(file = trainFilePath, stringsAsFactors = FALSE, sep=",")
+  #   testData <- read.csv2(file = testFilePath, stringsAsFactors = FALSE, sep=",")
+  # 
+  #   # plot top 30 models
+  #   drawPlots(trainData, testData, "TIMP", out_dir, plot_file, show_top)
+  # 
+  #   # plot all models
+  #   drawAllPlots(trainData, testData, "TIMP", out_dir)
+  # 
+  # } else{
+  #   print("Results could not be located! Please check if the run was completed.")
+  # }
 
 
 print(paste("Completed execution on:", Sys.time()))

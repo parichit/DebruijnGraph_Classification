@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ### Efficient Feature Engineering Over Unstructured Data for Use with Traditional AI Models
 
 _Mert Onur Cakiroglu, HASAN KURBAN, Parichit Sharma, Elham Khorasani Buxton, M. Oguzhan Kulekci, Maryam Raeeszadeh-Sarmazdeh, Haixu Tang, Mehmet Dalkilic_
@@ -70,4 +69,3 @@ Run on randomly sampled motifs (use classificationPipeline_alt.R)
 nohup Rscript classificationPipeline_alt.R no rand_out rand100_avg.csv TRUE > rand_job.log 2>&1 &
 ```
 **Output:** All the output data will be generated as CSV files in the output folder specified on the command line. Evaluation on validation folds are reported in the file `train_results.csv`, evaluation on the test data are reported inside the file `test_results.csv`. Additionally, the output plots for top models and all models will also be generated in the corresponding output folder. Note that the name of file containing the plots will remain same across the runs, however, each plot will be generated in its own output folder.
->>>>>>> 59d4b85e515a8004291bdb908ca269e9c0d58468

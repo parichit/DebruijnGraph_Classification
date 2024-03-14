@@ -9,6 +9,7 @@ require(xtable)
 require(tictoc)
 require(R.utils)
 require(dplyr)
+require(MLeval)
 
 
 
@@ -23,7 +24,7 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
   
   output_path = out_dir
   
-  output_path = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/"
+  # output_path = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/TIMP_Classification/"
 
   set.seed(100)
   control <- trainControl(method = "repeatedcv", 
@@ -54,7 +55,7 @@ runModels <- function(selected_Models, train_data, test_data, time_limit, number
       selected_Models = availableModels
     }
     
-    selected_Models = c("wsrf")
+    # selected_Models = c("wsrf")
     
   
     for(i in 1:length(selected_Models)){
