@@ -26,10 +26,18 @@ input_file_name = args[3]
 upsample = args[4]
 
 
+<<<<<<< HEAD
 # already_running = "no"
 # result_dir_name = "test_results"
 # input_file_name = "308_full.csv"
 # upsample = "TRUE"
+=======
+already_running = "no"
+result_dir_name = "test_results"
+input_file_name = "308_full.csv"
+# input_file_name = "random100_avg.csv"
+upsample = "TRUE"
+>>>>>>> cf301876291776c823b5a08e8bea2cf15ea2bd6e
 
 
 out_dir = file.path(base_path, result_dir_name)
@@ -80,7 +88,7 @@ source("runModels.R")
 
 # Set parameters
 time_limit = 1000
-number <- 3
+number <- 5
 repeats <- 1
 num_mdls <- 0
 show_top <- 10
