@@ -20,16 +20,16 @@ if (length(args) < 3){
 
 
 
-# already_running = args[1]
-# result_dir_name = args[2]
-# input_file_name = args[3]
-# upsample = args[4]
+already_running = args[1]
+result_dir_name = args[2]
+input_file_name = args[3]
+upsample = args[4]
 
 
-already_running = "no"
-result_dir_name = "test_results"
-input_file_name = "308_full.csv"
-upsample = "TRUE"
+# already_running = "no"
+# result_dir_name = "test_results"
+# input_file_name = "308_full.csv"
+# upsample = "TRUE"
 
 
 out_dir = file.path(base_path, result_dir_name)
@@ -69,6 +69,7 @@ print("###################################")
 source("DataIO.R")
 
 out <- load_data(file.path(base_path, "data", input_file_name), upsample)
+
 train_data <- out[[1]]
 test_data <- out[[2]]
 test_data$target <- as.factor(test_data$target)
@@ -78,22 +79,23 @@ source("runModels.R")
 
 
 # Set parameters
-# time_limit = 1000
-# number <- 5
-# repeats <- 5
-# num_mdls <- 0
-# show_top <- 10
-
-
 time_limit = 1000
 number <- 3
 repeats <- 1
-num_mdls <- 2
+num_mdls <- 0
 show_top <- 10
+
+
+# Test parameters
+# time_limit = 1000
+# number <- 5
+# repeats <- 5
+# num_mdls <- 2
+# show_top <- 10
 
   
   print("###################################")
-  print("3 RUN MODELS FOR PREDICTING REAL COMPONENT OF IMPEDANCE")
+  print("3 RUN MODELS FOR dBG Motif Based Classification")
   print("###################################")
   
   train_out_file = "train_results.csv"

@@ -3,11 +3,34 @@ require("stringr")
 require("caret")
 require("ROSE")
 
-load_data <- function(base_data_path){
+load_data <- function(base_data_path, upsample){
 
   
 # Read the raw data
-read_data <- function(base_data_path){
+# read_data <- function(base_data_path){
+  
+#   Inputdata <- read.csv2(base_data_path, sep=",", stringsAsFactors = FALSE)
+  
+#   target <- Inputdata$target
+#   Inputdata <- Inputdata[, -1]
+  
+#   Inputdata <- apply(Inputdata, 2, as.numeric)
+#   Inputdata <- as.data.frame(Inputdata)
+  
+#   Inputdata = cbind("target"=as.factor(target), Inputdata)
+  
+#   set.seed(9560)
+#   Inputdata <- ROSE(target~., data = Inputdata)$data
+
+#   Inputdata <- as.data.frame(Inputdata)
+#   target <- Inputdata$target
+#   target <- make.names(target)
+#   Inputdata$target <- as.factor(target)
+  
+#   return(Inputdata)
+# }
+
+read_data <- function(base_data_pathm, upsample){
   
   Inputdata <- read.csv2(base_data_path, sep=",", stringsAsFactors = FALSE)
   
@@ -19,16 +42,22 @@ read_data <- function(base_data_path){
   
   Inputdata = cbind("target"=as.factor(target), Inputdata)
   
-  set.seed(9560)
-  Inputdata <- ROSE(target~., data = Inputdata)$data
-
+  if(upsample == "TRUE"){
+      set.seed(9560)
+      Inputdata <- ROSE(target~., data = Inputdata)$data
+  } else{
+    print("NO UPSAMPLING")
+  }
+  
   Inputdata <- as.data.frame(Inputdata)
+  
   target <- Inputdata$target
   target <- make.names(target)
-  Inputdata$target <- as.factor(target)
+  Inputdata$target <- target
   
   return(Inputdata)
 }
+
 
 # Inputdata <- read_data(file.path(base_path, "data", "308_full.csv"))
 
@@ -39,7 +68,7 @@ read_data <- function(base_data_path){
 #     Inputdata <- rbind(Inputdata, temp)
 # }
 
-train_data <- read_data(base_data_path)
+train_data <- read_data(base_data_path, upsample)
 
 
 # Create training and test data

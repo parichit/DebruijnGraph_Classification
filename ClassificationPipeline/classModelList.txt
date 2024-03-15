@@ -1,6 +1,6 @@
 ada,ada 
 bnclassify,ada,AdaBag,AdaBoost.M1,avNNet,multinom,nnet,pcaNNet,awnb,awtan,manb,nb,nbDiscrete,nbSearch,tan,tanSearch 
-mgcv,bag,bagEarth,bagEarthGCV,bagFDA,bagFDAGCV,earth,fda,gcvEarth,bam,gam 
+mgcv,bag,bagEarth,bagEarthGCV,bagFDA,bagFDAGCV,earth,gcvEarth,gam 
 arm,bartMachine,bayesglm,glm 
 binda,binda 
 sparsediscrim,binda,blackboost,cforest,ctree,ctree2,BstLm,bstSm,bstTree,C5.0,C5.0Cost,C5.0Rules,C5.0Tree,CSimca,Linda,QdaCov,dda,hdrda,rda,rlda 
