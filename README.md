@@ -1,6 +1,6 @@
 ### An Extended de Bruijn Graph for Feature Engineering Over Biological Sequential Data
 
-_Mert Onur Cakiroglu, HASAN KURBAN, Parichit Sharma, Elham Khorasani Buxton, M. Oguzhan Kulekci, Maryam Raeeszadeh-Sarmazdeh, Mehmet Dalkilic_
+_Mert Onur Cakiroglu, Hasan Kurban, Parichit Sharma, Elham Khorasani Buxton, M. Oguzhan Kulekci, Maryam Raeeszadeh-Sarmazdeh, Mehmet Dalkilic_
 
 This repository contains the software code and data used in the paper titled - "An Extended de Bruijn Graph for Feature Engineering Over Biological Sequential Data". The code is organized into collection of R scripts and instructions for replicating the results are as follows:
 
