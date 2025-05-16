@@ -8,7 +8,7 @@ This repository contains the software code and data used in the paper titled - "
 The code is organized into collection of R scripts and instructions for replicating the results are as follows:
 
 <div align="center">
-  <img src="images/Figure1.png" alt="Image description" width="300">
+  <img src="images/Figure1.png" alt="Image description" width="700">
   </br>
 </div>
 
