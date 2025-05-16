@@ -2,7 +2,18 @@
 
 _Mert Onur Cakiroglu, Hasan Kurban, Parichit Sharma, Elham Khorasani Buxton, M. Oguzhan Kulekci, Maryam Raeeszadeh-Sarmazdeh, Mehmet Dalkilic_
 
-This repository contains the software code and data used in the paper titled - "An Extended de Bruijn Graph for Feature Engineering Over Biological Sequential Data". The code is organized into collection of R scripts and instructions for replicating the results are as follows:
+This repository contains the software code and data used in the paper titled - "An Extended de Bruijn Graph for Feature Engineering Over Biological Sequential Data". The research paper is available at: [Paper](https://iopscience.iop.org/article/10.1088/2632-2153/ad5fde)
+
+
+The code is organized into collection of R scripts and instructions for replicating the results are as follows:
+
+<div align="center">
+  <img src="images/Figure1.png" alt="Image description" width="300">
+  </br>
+</div>
+
+__Figure 1:__ Illustration of trie-based search for identifying edges analogous to “NRT ” in a
+de Bruijn Graph (dBG) using a mock substitution matrix M.
 
 **Note:** 
 
@@ -16,14 +27,12 @@ This repository contains the software code and data used in the paper titled - "
 **Clone the repo**
 
 ```
-git clone 
+git clone https://github.com/parichit/DebruijnGraph_Classification.git
 ```
 
-
-
 =======
-# de Bruijn Graph
 
+## de Bruijn Graph
 
 
 **Source code:** The Python implementation of the de Bruijn Graph (dBG) is available inside the `dBG` folder.
